@@ -3,26 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ATLAS public-source research and evidence workspace">
+  <meta name="description" content="ATLAS is a local workspace for public-source research, source review, and evidence management.">
   <title>ATLAS OSINT</title>
-  <link rel="stylesheet" href="/static/style.css?v=0.4.3">
+  <link rel="stylesheet" href="/static/style.css?v=0.5.0">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="/" aria-label="ATLAS home"><span class="brand-mark">A</span><span>ATLAS <small>PUBLIC SOURCE RESEARCH</small></span></a>
-    <span class="health"><span class="dot"></span> Local workspace</span>
+    <span class="health"><span class="dot"></span> LOCAL-ONLY WORKSPACE</span>
   </header>
 
   <main class="layout">
     <section class="intro">
-      <p class="eyebrow">RESEARCH WORKSPACE</p>
-      <h1>Find public sources.<br><em>Keep the evidence clear.</em></h1>
-      <p class="intro-copy">Search the public web, save useful sources, and record what you have checked. Search matches are leads, not confirmed facts.</p>
+      <p class="eyebrow">ATLAS / OPEN-SOURCE RESEARCH DESK</p>
+      <h1>Public information.<br><em>Organised as evidence.</em></h1>
+      <p class="intro-copy">Search connected public sources, keep useful links with a research case, and record what you have reviewed. A search result is a lead to assess, not a verified fact.</p>
     </section>
 
     <section class="panel case-panel" aria-labelledby="case-title">
       <div class="panel-heading"><div><p class="eyebrow">00 / RESEARCH PLAN</p><h2 id="case-title">Start with a research case</h2></div><span class="step-icon">01</span></div>
-      <p class="section-copy">Real investigations start with a question and a clear scope. Create a case before searching or saving sources. ATLAS records your stated authority; it cannot decide whether that authority is legally sufficient.</p>
+      <p class="section-copy">Set the research question, public-source scope, and authority basis before collecting material. ATLAS records your declaration; it does not verify permission or make legal decisions.</p>
       <div class="case-selector">
         <label for="case-select">Current workspace</label>
         <select id="case-select" aria-label="Choose research case"><option value="all">All saved records</option></select>
@@ -51,7 +51,7 @@
         <input id="query" name="q" minlength="3" maxlength="500" placeholder="A name, username, organisation, or public topic" required>
         <button type="submit">Search sources <span aria-hidden="true">→</span></button>
       </form>
-      <p class="hint">This searches three separate public sources: Yahoo's web index, Wikipedia, and Wikidata. Try a name without quotes, or use a shorter phrase. Each result shows where it came from. A name match is only a lead, not proof it is the person you mean.</p>
+      <p class="hint">Searches Yahoo's web index, Wikipedia, and Wikidata separately. Results cover those services' indexes only. A name match is a research lead, not proof of identity.</p>
       <div id="search-message" class="message" role="status" aria-live="polite"></div>
       <div id="coverage-list" class="coverage-list"></div>
       <div id="search-results" class="result-list"></div>
@@ -59,7 +59,7 @@
 
     <section class="panel exposure-panel" aria-labelledby="exposure-title">
       <div class="panel-heading"><div><p class="eyebrow">02 / AUTHORISED ACCOUNT CHECK</p><h2 id="exposure-title">Check a public username</h2></div><span class="step-icon">◎</span></div>
-      <p class="section-copy">Choose one service and enter a public username. GitHub gets a direct public-profile check; all services get a check of Yahoo, Bing, Brave, and Google web indexes for indexed pages on that service. Shopping, payment, and messaging accounts are private, so this cannot inspect an account or its orders/messages. ATLAS does not show or save matching page text or links. No results do not prove that nothing is exposed.</p>
+      <p class="section-copy">Checks a GitHub public profile when GitHub is selected, then looks for indexed pages through Yahoo, Bing, Brave, and Google. It does not sign in or inspect private account data. Snippets may be incomplete or wrong; no result is not proof that nothing is exposed.</p>
       <form id="exposure-form" class="stack-form" method="post" action="/exposure-check">
         <div class="two-col">
           <label>Platform
@@ -81,7 +81,7 @@
             <input id="username" name="username" maxlength="65" pattern="@?[A-Za-z0-9._-]{1,64}" placeholder="@username (not an email)" required>
           </label>
         </div>
-        <label class="consent"><input id="authorized" type="checkbox" required><span>I own this account or have permission to check it. I understand the username is sent to GitHub for a GitHub check and to multiple search providers for web-index checks; ATLAS does not keep it.</span></label>
+        <label class="consent"><input id="authorized" type="checkbox" required><span>I own this account or have permission to check it. The username is sent to the selected public search services and is not saved by ATLAS.</span></label>
         <button type="submit" class="secondary-button">Run authorised check <span aria-hidden="true">→</span></button>
       </form>
       <div id="exposure-message" class="message" role="status" aria-live="polite"></div>
@@ -116,6 +116,6 @@
   </main>
 
   <footer><span>ATLAS OSINT <span id="year"></span></span><span>Use only for lawful public-source research and authorised checks.</span><a href="/docs">API reference</a></footer>
-  <script src="/static/app.js?v=0.4.3" defer></script>
+  <script src="/static/app.js?v=0.5.0" defer></script>
 </body>
 </html>
