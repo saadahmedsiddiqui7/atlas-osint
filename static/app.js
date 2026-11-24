@@ -241,11 +241,13 @@ async function runExposureCheck(event) {
   }
   const button = event.currentTarget.querySelector("button");
   button.disabled = true;
-  showMessage("#exposure-message", "Checking search-result snippets. The matching page text and direct link will not be shown or saved…");
+  const platform = $("#platform").value;
+  const username = $("#username").value.trim().replace(/^@/, "");
+  showMessage("#exposure-message", "Checking public search indexes. ATLAS saves only redacted alert categories, not the matching snippet…");
   try {
     const data = await api("/exposure-check?limit=10", {
       method: "POST",
-      body: JSON.stringify({platform: $("#platform").value, username: $("#username").value.trim().replace(/^@/, ""), case_id: activeCase.id, authorized: true}),
+      body: JSON.stringify({platform, username, case_id: activeCase.id, authorized: true}),
     });
     $("#username").value = "";
     const direct = data.direct_check;
@@ -266,6 +268,13 @@ async function runExposureCheck(event) {
     const directLink = $("#username-profile-link");
     directLink.replaceChildren();
     if (direct.profile_url) addLink(directLink, direct.profile_url, "Open the public GitHub profile");
+    else if (platform === "Instagram") {
+      addLink(
+        directLink,
+        `https://www.instagram.com/${encodeURIComponent(username)}/`,
+        "Open this Instagram username manually (ATLAS has not confirmed the account)",
+      );
+    }
     await loadCases(caseId());
   } catch (error) {
     $("#username-profile-link").replaceChildren();

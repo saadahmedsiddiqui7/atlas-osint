@@ -114,6 +114,8 @@ button:disabled { opacity: .55; cursor: wait; transform: none; }
 .empty { padding: 17px; border: 1px dashed #2b414a; border-radius: 7px; color: var(--muted); text-align: center; font-size: 12px; }
 .message { margin-top: 10px; color: var(--accent); font-size: 12px; }
 .message.error { color: var(--red); }
+#username-profile-link { margin-top: 8px; }
+#username-profile-link a { color: var(--accent); font-size: 11px; }
 .alert-log-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 22px 0 0; }
 .alert-log-heading h3 { margin: 0; font: 600 13px "DM Sans", Arial, sans-serif; }
 .alert-record { border-left: 3px solid var(--amber); }

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ATLAS is a local workspace for public-source research, source review, and evidence management.">
   <title>ATLAS OSINT</title>
-  <link rel="stylesheet" href="/static/style.css?v=0.5.0">
+  <link rel="stylesheet" href="/static/style.css?v=0.5.1">
 </head>
 <body>
   <header class="topbar">
@@ -59,7 +59,7 @@
 
     <section class="panel exposure-panel" aria-labelledby="exposure-title">
       <div class="panel-heading"><div><p class="eyebrow">02 / AUTHORISED ACCOUNT CHECK</p><h2 id="exposure-title">Check a public username</h2></div><span class="step-icon">◎</span></div>
-      <p class="section-copy">Checks a GitHub public profile when GitHub is selected, then looks for indexed pages through Yahoo, Bing, Brave, and Google. It does not sign in or inspect private account data. Snippets may be incomplete or wrong; no result is not proof that nothing is exposed.</p>
+      <p class="section-copy">Checks a GitHub public profile when GitHub is selected, then looks for indexed pages through Yahoo, Bing, Brave, and Google. For Instagram, ATLAS cannot confirm the account directly; it can open the public Instagram page for you to check manually. It does not sign in or inspect private account data. Snippets may be incomplete or wrong; no result is not proof that nothing is exposed.</p>
       <form id="exposure-form" class="stack-form" method="post" action="/exposure-check">
         <div class="two-col">
           <label>Platform
@@ -116,6 +116,6 @@
   </main>
 
   <footer><span>ATLAS OSINT <span id="year"></span></span><span>Use only for lawful public-source research and authorised checks.</span><a href="/docs">API reference</a></footer>
-  <script src="/static/app.js?v=0.5.0" defer></script>
+  <script src="/static/app.js?v=0.5.1" defer></script>
 </body>
 </html>
