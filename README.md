@@ -1,84 +1,75 @@
 # ATLAS OSINT
 
-ATLAS is a local research workspace for lawful public-source searches and
-organising source links as evidence. It is designed to help you keep track of
-what you found and what you reviewed, not to decide what is true.
+ATLAS is a local research workspace for lawful public-source searches and organising source links as evidence. It helps you track what you found and reviewed; it does not decide what is true.
 
-Research searches run three separate public-source connectors: the DDGS Yahoo
-web index, Wikipedia, and Wikidata. Wikipedia and Wikidata use their official
-public MediaWiki APIs and need no account or API key. Each source reports its
-own result count and connection status. These sources cover their own indexes,
-not every page or record on the internet.
+## Quick start
 
-Use it only for lawful public-source research and checks on accounts you own
-or are authorised to investigate. The username check uses GitHub's public
-profile endpoint for GitHub names and Yahoo, Bing, Brave, and Google web
-indexes for possible mentions on 22 listed platforms. Search-index results
-are not a complete platform scan. It does not log in, access private accounts,
-check leaked passwords, or prove account ownership.
+You need Python 3.10 or newer and an internet connection for public searches. Download or clone this repository, open a terminal in the `atlas-osint` folder, and run the start script for your computer:
 
-## Start ATLAS on Windows
+| Computer | Start command |
+| --- | --- |
+| Windows | Double-click `start_atlas.bat`, or run `.\start_atlas.bat` in PowerShell |
+| macOS / Linux | Run `chmod +x start_atlas.sh` once, then `./start_atlas.sh` |
 
-Open PowerShell in this folder and run:
+The first start creates a private Python environment in `.venv` and installs the required packages. Later starts reuse that environment. When startup finishes, open [http://127.0.0.1:8000](http://127.0.0.1:8000). The API reference is at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
+Keep the terminal window open while using ATLAS. To stop it, press **Ctrl+C** in that window.
+
+### Manual setup
+
+If you prefer to run each setup step yourself, use the commands for your computer.
+
+**Windows PowerShell**
 
 ```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-uvicorn main:app --reload --no-access-log
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-Then open `http://127.0.0.1:8000` in your browser. The API reference is at
-`http://127.0.0.1:8000/docs`.
+**macOS / Linux**
 
-ATLAS stores records in `atlas.db` beside `database.py`. On startup, it adds
-three optional review/search fields to the existing evidence table when they
-are missing. This is an additive update; it preserves saved evidence.
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8000
+```
 
-## What the screens do
+If your computer does not recognise `py` or `python3`, install Python 3.10 or newer from [python.org](https://www.python.org/downloads/) and try again. If a package install fails, check your internet connection and try the install command again.
 
-- **Research case** asks for a specific question, a defined source scope, and
-  the operator's stated authority before any new source is collected or saved.
-  This is a self-declaration, not a legal review or proof of permission. Closing
-  a case blocks new collection; saved records remain available. Existing records
-  from earlier ATLAS versions remain visible and are not automatically assigned
-  to a case.
-- **Search public sources** checks Yahoo, Wikipedia, and Wikidata separately,
-  shows which sources returned results, and labels every result with its source.
-  It saves usable links as evidence marked “not checked yet,” meaning ATLAS has
-  not fact-checked the page.
-- **Check a public username** directly checks for a public profile on GitHub and
-  searches four web indexes for indexed pages about each selected
-  platform. It reports these two checks separately so an empty index is not
-  confused with a missing account. You must confirm that you own the account or
-  have permission. The username is sent to GitHub and/or the search provider
-  but is not saved by ATLAS. ATLAS stores only the platform,
-  website domain, broad alert category, and removal-tracking status; it does not
-  save the matching text or direct page link.
-- **Removal tracker** links to the platform's official reporting guidance and
-  lets you mark an alert as needing action, reported, removed, or a false
-  positive.
-- **Evidence log** filters saved records and lets you record a review status
-  and a short note.
+## What ATLAS searches
+
+Public research searches query three separate sources: the Yahoo web index through DDGS, Wikipedia, and Wikidata. Wikipedia and Wikidata use their official public APIs and do not need an account or API key. These services cover their own indexes, not every page on the internet.
+
+The username check uses GitHub's public profile service for GitHub usernames and web indexes for possible mentions on the selected services. Search results are not a complete scan of a platform. ATLAS does not log in to accounts, access private pages, check leaked passwords, or prove who owns an account.
+
+## Using the screens
+
+- **Research case** asks for a question, source scope, and your stated authority before new sources are collected or saved. This self-declaration is not proof of permission or a legal review. Closing a case stops new collection; it does not delete saved records.
+- **Search public sources** checks Yahoo, Wikipedia, and Wikidata separately, shows which ones responded, and labels results with their source. Saved links are marked “not checked yet” until you review them.
+- **Check a public username** checks GitHub's public profile service when GitHub is selected, and searches web indexes for indexed pages about the selected service. The username is sent to those providers and is not saved by ATLAS. ATLAS stores only the platform, website domain, broad alert category, and removal status; it does not save matching text or direct page links.
+- **Removal tracker** links to the service's reporting guidance and tracks whether an alert needs action, was reported, was removed, or was a false positive.
+- **Evidence log** filters saved records and lets you record a review status and a short note.
 - **Add a source** saves a public URL and your notes for later review.
 
-“Reviewed” means you opened and checked the source. “Corroborated” means you
-found independent support for it. These are your assessments; ATLAS does not
-automatically verify claims.
+“Reviewed” means you opened and checked the source. “Corroborated” means you found independent support. These are your assessments; ATLAS does not automatically verify claims.
 
-Exposure alerts are only clues from search-result snippets, not confirmation.
-Search engines do not index every page, and ATLAS currently checks for email
-and phone patterns only on the selected platform. A clean result does not mean
-that no exposure exists.
+Exposure alerts are clues from search-result snippets, not confirmation. Search engines do not index every page. ATLAS checks for email and phone patterns only in snippets returned for the selected service. No alert does not prove there is no exposure.
 
-## Safety and current limits
+## Your saved information
 
-The API has no sign-in. Run it on your own computer and keep it on the local
-address shown above; do not expose it to the public internet. Do not enter
-passwords, private account details, or sensitive personal information. Public
-search results can be incomplete or wrong, and a match does not establish who
-owns an account.
+ATLAS creates `atlas.db` in the project folder when it starts. It stores case, evidence, and alert records on your computer. Back up this file if you need to preserve your research. The start scripts do not delete it. The database is excluded from Git so it is not included when sharing the source code.
 
-Case authority is recorded from the operator's selection and confirmation; ATLAS
-does not verify legal authority, determine whether an investigation is lawful,
-or replace agency review, platform terms, or local law.
+When ATLAS starts with an older database, it adds missing optional fields without deleting saved evidence.
+
+## Safety and privacy
+
+The API has no sign-in. Run ATLAS on your own computer and keep it at the local address (`127.0.0.1`) shown in the start instructions. Do not expose it to the public internet. Do not enter passwords, private account details, or sensitive personal information.
+
+Use ATLAS only for lawful public-source research and checks on accounts you own or are authorised to investigate. A result can be incomplete or wrong, and a name match does not establish identity. ATLAS does not verify your legal authority or replace platform terms, agency review, or local law.
+
+## For developers
+
+Install the packages from `requirements.txt` in a Python 3.10+ environment, then run `python -m uvicorn main:app --host 127.0.0.1 --port 8000` from the project folder. Set `ATLAS_SEARCH_BACKEND` to a supported DDGS backend name to change the primary public web index; it defaults to `yahoo`.
