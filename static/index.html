@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ATLAS public-source research and evidence workspace">
+  <title>ATLAS OSINT</title>
+  <link rel="stylesheet" href="/static/style.css?v=0.4.3">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="ATLAS home"><span class="brand-mark">A</span><span>ATLAS <small>PUBLIC SOURCE RESEARCH</small></span></a>
+    <span class="health"><span class="dot"></span> Local workspace</span>
+  </header>
+
+  <main class="layout">
+    <section class="intro">
+      <p class="eyebrow">RESEARCH WORKSPACE</p>
+      <h1>Find public sources.<br><em>Keep the evidence clear.</em></h1>
+      <p class="intro-copy">Search the public web, save useful sources, and record what you have checked. Search matches are leads, not confirmed facts.</p>
+    </section>
+
+    <section class="panel case-panel" aria-labelledby="case-title">
+      <div class="panel-heading"><div><p class="eyebrow">00 / RESEARCH PLAN</p><h2 id="case-title">Start with a research case</h2></div><span class="step-icon">01</span></div>
+      <p class="section-copy">Real investigations start with a question and a clear scope. Create a case before searching or saving sources. ATLAS records your stated authority; it cannot decide whether that authority is legally sufficient.</p>
+      <div class="case-selector">
+        <label for="case-select">Current workspace</label>
+        <select id="case-select" aria-label="Choose research case"><option value="all">All saved records</option></select>
+        <button id="case-status-button" class="quiet-button" type="button" hidden>Close case</button>
+      </div>
+      <div id="case-summary" class="case-summary" role="status" aria-live="polite"></div>
+      <div class="activity-heading"><h3>Recent case activity</h3><small>Recorded by this local ATLAS workspace; it does not identify which person used the computer.</small></div>
+      <div id="case-activity-list" class="activity-list"><p class="empty">Choose a case to view its activity.</p></div>
+      <form id="case-create-form" class="stack-form case-form" method="post" action="/cases">
+        <div class="two-col">
+          <label>Case name<input name="title" maxlength="160" minlength="3" placeholder="Example: Verify a public company claim" required></label>
+          <label>Authority basis<select name="authorization_basis" required><option value="self_audit">My own self-audit</option><option value="explicit_consent">Explicit permission</option><option value="official_duties">Official work duties</option><option value="public_interest">Documented public-interest inquiry</option></select></label>
+        </div>
+        <label>What question are you trying to answer?<textarea name="question" minlength="10" maxlength="2000" rows="2" placeholder="Write one specific research question." required></textarea></label>
+        <label>What is in scope?<textarea name="scope" minlength="10" maxlength="2000" rows="2" placeholder="Name the public sources and limits for this work." required></textarea></label>
+        <label class="consent"><input name="authorized" type="checkbox" required><span>I confirm that I have authority to conduct this research and will stay within the scope above.</span></label>
+        <button type="submit" class="secondary-button">Create case <span aria-hidden="true">→</span></button>
+      </form>
+      <div id="case-message" class="message" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="panel search-panel" aria-labelledby="search-title">
+      <div class="panel-heading"><div><p class="eyebrow">01 / PUBLIC RESEARCH</p><h2 id="search-title">Search public sources</h2></div><span class="step-icon">⌕</span></div>
+      <form id="search-form" class="form-row" method="post" action="/">
+        <label class="sr-only" for="query">Research topic</label>
+        <input id="query" name="q" minlength="3" maxlength="500" placeholder="A name, username, organisation, or public topic" required>
+        <button type="submit">Search sources <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="hint">This searches three separate public sources: Yahoo's web index, Wikipedia, and Wikidata. Try a name without quotes, or use a shorter phrase. Each result shows where it came from. A name match is only a lead, not proof it is the person you mean.</p>
+      <div id="search-message" class="message" role="status" aria-live="polite"></div>
+      <div id="coverage-list" class="coverage-list"></div>
+      <div id="search-results" class="result-list"></div>
+    </section>
+
+    <section class="panel exposure-panel" aria-labelledby="exposure-title">
+      <div class="panel-heading"><div><p class="eyebrow">02 / AUTHORISED ACCOUNT CHECK</p><h2 id="exposure-title">Check a public username</h2></div><span class="step-icon">◎</span></div>
+      <p class="section-copy">Choose one service and enter a public username. GitHub gets a direct public-profile check; all services get a check of Yahoo, Bing, Brave, and Google web indexes for indexed pages on that service. Shopping, payment, and messaging accounts are private, so this cannot inspect an account or its orders/messages. ATLAS does not show or save matching page text or links. No results do not prove that nothing is exposed.</p>
+      <form id="exposure-form" class="stack-form" method="post" action="/exposure-check">
+        <div class="two-col">
+          <label>Platform
+            <select id="platform" name="platform" required>
+              <optgroup label="Social and video">
+                <option>Instagram</option><option>Facebook</option><option>YouTube</option><option>WhatsApp</option>
+                <option>Reddit</option><option>X</option><option>LinkedIn</option><option>ShareChat</option>
+                <option>Telegram</option><option>Snapchat</option><option>Discord</option><option>Twitch</option>
+                <option value="TikTok">TikTok (where available)</option><option>GitHub</option>
+              </optgroup>
+              <optgroup label="Shopping and delivery">
+                <option>Amazon India</option><option>Flipkart</option><option>Myntra</option><option>Meesho</option>
+                <option>Swiggy</option><option>Zomato</option>
+              </optgroup>
+              <optgroup label="Payments"><option>Paytm</option><option>PhonePe</option></optgroup>
+            </select>
+          </label>
+          <label>Public username
+            <input id="username" name="username" maxlength="65" pattern="@?[A-Za-z0-9._-]{1,64}" placeholder="@username (not an email)" required>
+          </label>
+        </div>
+        <label class="consent"><input id="authorized" type="checkbox" required><span>I own this account or have permission to check it. I understand the username is sent to GitHub for a GitHub check and to multiple search providers for web-index checks; ATLAS does not keep it.</span></label>
+        <button type="submit" class="secondary-button">Run authorised check <span aria-hidden="true">→</span></button>
+      </form>
+      <div id="exposure-message" class="message" role="status" aria-live="polite"></div>
+      <div id="username-profile-link"></div>
+      <div class="alert-log-heading"><h3>Removal tracker</h3><button id="refresh-alerts" class="quiet-button" type="button">Refresh alerts</button></div>
+      <div id="alerts-list" class="alert-list"><p class="empty">Loading alerts…</p></div>
+    </section>
+
+    <section class="panel evidence-panel" aria-labelledby="evidence-title">
+      <div class="panel-heading"><div><p class="eyebrow">03 / EVIDENCE LOG</p><h2 id="evidence-title">Your saved sources</h2></div><span id="evidence-count" class="count">0</span></div>
+      <div class="toolbar">
+        <label class="sr-only" for="evidence-search">Filter evidence</label>
+        <input id="evidence-search" type="search" placeholder="Filter by title or link">
+        <label class="sr-only" for="evidence-status">Filter by status</label>
+        <select id="evidence-status"><option value="">All statuses</option><option value="unverified">Not checked yet</option><option value="reviewed">Reviewed</option><option value="corroborated">Independent support found</option><option value="disputed">Disputed</option></select>
+        <button id="refresh-evidence" class="quiet-button" type="button">Refresh</button>
+      </div>
+      <p class="hint">“Not checked yet” means ATLAS saved the link only. “Reviewed” means you checked the source. “Independent support found” means you found another source for the same claim. ATLAS does not decide whether a claim is true.</p>
+      <div id="evidence-list" class="evidence-list"><p class="empty">Loading saved sources…</p></div>
+    </section>
+
+    <section class="panel add-panel" aria-labelledby="add-title">
+      <div class="panel-heading"><div><p class="eyebrow">04 / MANUAL NOTE</p><h2 id="add-title">Add a source</h2></div><span class="step-icon">＋</span></div>
+      <form id="evidence-form" class="stack-form" method="post" action="/evidence">
+        <label>Source title<input name="title" maxlength="300" required placeholder="What is this page?" /></label>
+        <label>Public source URL<input name="source_url" type="url" required placeholder="https://example.org/page" /></label>
+        <label>Notes<textarea name="description" maxlength="10000" rows="3" placeholder="What did you observe? Keep claims separate from facts."></textarea></label>
+        <button type="submit" class="secondary-button">Save as unverified evidence <span aria-hidden="true">→</span></button>
+      </form>
+      <div id="evidence-message" class="message" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer><span>ATLAS OSINT <span id="year"></span></span><span>Use only for lawful public-source research and authorised checks.</span><a href="/docs">API reference</a></footer>
+  <script src="/static/app.js?v=0.4.3" defer></script>
+</body>
+</html>

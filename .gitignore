@@ -1,0 +1,27 @@
+# Local database and SQLite sidecar files may contain saved research.
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite-*
+
+# Python environments and generated files.
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local settings, credentials, logs, and generated research exports.
+.env
+.env.*
+!.env.example
+*.log
+reports/
+
+# Editor and operating-system files.
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
