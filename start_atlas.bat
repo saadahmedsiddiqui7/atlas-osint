@@ -22,7 +22,7 @@ if errorlevel 1 goto setup_failed
 echo.
 echo ATLAS will open at http://127.0.0.1:8000
 echo Keep this window open while using ATLAS. Press Ctrl+C to stop it.
-".venv\Scripts\python.exe" -m uvicorn main:app --host 127.0.0.1 --port 8000
+".venv\Scripts\python.exe" -m uvicorn main:app --host 127.0.0.1 --port 8000 --no-access-log
 exit /b %errorlevel%
 
 :setup_failed

@@ -14,4 +14,4 @@ echo "Installing or checking required packages..."
 echo
 echo "ATLAS will open at http://127.0.0.1:8000"
 echo "Keep this terminal open while using ATLAS. Press Ctrl+C to stop it."
-exec .venv/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8000
+exec .venv/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8000 --no-access-log

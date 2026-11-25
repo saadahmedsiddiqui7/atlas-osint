@@ -25,7 +25,7 @@ If you prefer to run each setup step yourself, use the commands for your compute
 py -3 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install --upgrade pip
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
+.\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000 --no-access-log
 ```
 
 **macOS / Linux**
@@ -34,7 +34,7 @@ py -3 -m venv .venv
 python3 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8000
+.venv/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8000 --no-access-log
 ```
 
 If your computer does not recognise `py` or `python3`, install Python 3.10 or newer from [python.org](https://www.python.org/downloads/) and try again. If a package install fails, check your internet connection and try the install command again.
@@ -72,4 +72,4 @@ Use ATLAS only for lawful public-source research and checks on accounts you own 
 
 ## For developers
 
-Install the packages from `requirements.txt` in a Python 3.10+ environment, then run `python -m uvicorn main:app --host 127.0.0.1 --port 8000` from the project folder. Set `ATLAS_SEARCH_BACKEND` to a supported DDGS backend name to change the primary public web index; it defaults to `yahoo`.
+Install the packages from `requirements.txt` in a Python 3.10+ environment, then run `python -m uvicorn main:app --host 127.0.0.1 --port 8000 --no-access-log` from the project folder. Set `ATLAS_SEARCH_BACKEND` to a supported DDGS backend name to change the primary public web index; it defaults to `yahoo`.

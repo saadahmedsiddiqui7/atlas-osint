@@ -133,10 +133,15 @@ function showMessage(selector, message, isError = false) {
 }
 
 async function api(path, options = {}) {
-  const response = await fetch(path, {
-    ...options,
-    headers: {"Content-Type": "application/json", ...(options.headers || {})},
-  });
+  let response;
+  try {
+    response = await fetch(path, {
+      ...options,
+      headers: {"Content-Type": "application/json", ...(options.headers || {})},
+    });
+  } catch {
+    throw new Error("ATLAS cannot reach its local server. Start ATLAS with the start script for your computer, then refresh this page.");
+  }
   const body = await response.json().catch(() => ({}));
   if (!response.ok) {
     const detail = body.detail;
